@@ -1,0 +1,295 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #f7f2ea;
+    color: #29231f;
+}
+
+.hero {
+    min-height: 290px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        linear-gradient(rgba(32, 24, 18, .78), rgba(32, 24, 18, .78)),
+        radial-gradient(circle at center, #9c6b38, #241a14);
+    color: white;
+    padding: 40px 20px;
+}
+
+.small-title {
+    font-size: 14px;
+    letter-spacing: 7px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.hero h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(42px, 8vw, 78px);
+    letter-spacing: 4px;
+    line-height: 1;
+}
+
+.tagline {
+    margin-top: 18px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    opacity: .9;
+}
+
+.container {
+    width: min(1180px, 92%);
+    margin: 55px auto;
+}
+
+.section-heading,
+.order-header {
+    margin-bottom: 25px;
+}
+
+.section-heading span,
+.order-header span {
+    color: #a06b35;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 34px;
+    margin-top: 5px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.menu-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(55, 39, 26, .08);
+    border: 1px solid #eee2d3;
+    transition: .25s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(55, 39, 26, .14);
+}
+
+.food-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.menu-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+}
+
+.price {
+    color: #a06b35;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 8px 0 18px;
+}
+
+.add-btn,
+.place-order,
+.clear-order {
+    border: none;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 9px;
+}
+
+.add-btn {
+    width: 100%;
+    padding: 11px;
+    color: white;
+    background: #29231f;
+}
+
+.add-btn:hover {
+    background: #a06b35;
+}
+
+.order-section {
+    margin-top: 65px;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 35px rgba(55, 39, 26, .09);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-count {
+    background: #f0e4d4;
+    color: #805327;
+    padding: 9px 15px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.empty-order {
+    text-align: center;
+    padding: 40px 10px;
+    color: #8a8178;
+}
+
+.empty-order div {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.empty-order p {
+    font-weight: 600;
+    color: #514940;
+}
+
+.empty-order small {
+    display: block;
+    margin-top: 5px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    display: none;
+}
+
+th {
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #8a8178;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee4d8;
+}
+
+td {
+    padding: 16px 10px;
+    border-bottom: 1px solid #f0e9df;
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-controls button {
+    border: 1px solid #d9cbbb;
+    background: #faf7f2;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.remove-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.total-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 22px;
+    border-top: 2px solid #29231f;
+}
+
+.total-box span {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.total-box strong {
+    font-family: "Playfair Display", serif;
+    font-size: 32px;
+    color: #a06b35;
+}
+
+.place-order,
+.clear-order {
+    margin-top: 22px;
+    padding: 14px 25px;
+}
+
+.place-order {
+    background: #29231f;
+    color: white;
+}
+
+.place-order:hover {
+    background: #a06b35;
+}
+
+.clear-order {
+    margin-left: 8px;
+    background: #eee4d8;
+    color: #4c4137;
+}
+
+footer {
+    text-align: center;
+    padding: 28px 15px;
+    background: #29231f;
+    color: #d8cec3;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 900px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .order-section {
+        padding: 20px 15px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    .order-header {
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
