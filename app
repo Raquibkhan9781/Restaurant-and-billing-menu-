@@ -3,48 +3,46 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 MENU = {
-    "Pasta": 30,
-    "Pizza": 40,
-    "Burger": 50,
-    "Sandwich": 60,
-    "Fries": 70,
-    "Coke": 40,
-    "Coffee": 50,
-    "Tea": 20
+    "pasta": 30,
+    "pizza": 40,
+    "burger": 50,
+    "sandwich": 60,
+    "fries": 70,
+    "coke": 40,
+    "coffee": 50,
+    "tea": 20
 }
 
 @app.route("/")
 def home():
     return render_template("index.html", menu=MENU)
 
-@app.route("/order", methods=["POST"])
-def order():
-    data = request.get_json()
+@app.route("/calculate", methods=["POST"])
+def calculate():
+    data = request.get_json(silent=True) or {}
     items = data.get("items", [])
 
-    order_items = []
-    total_amount = 0
+    result = []
+    total = 0
 
     for item in items:
-        name = item.get("name", "")
-        quantity = int(item.get("quantity", 0))
+        name = str(item.get("name", "")).lower().strip()
+        try:
+            quantity = int(item.get("quantity", 1))
+        except (TypeError, ValueError):
+            quantity = 1
 
         if name in MENU and quantity > 0:
-            price = MENU[name]
-            amount = price * quantity
-            total_amount += amount
-
-            order_items.append({
-                "name": name,
+            amount = MENU[name] * quantity
+            total += amount
+            result.append({
+                "name": name.title(),
                 "quantity": quantity,
-                "price": price,
+                "price": MENU[name],
                 "amount": amount
             })
 
-    return jsonify({
-        "items": order_items,
-        "total": total_amount
-    })
+    return jsonify({"items": result, "total": total})
 
 if __name__ == "__main__":
     app.run(debug=True)
