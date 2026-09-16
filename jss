@@ -1,98 +1,104 @@
 let orders = [];
 
-function addItem(name, price) {
-    const existing = orders.find(item => item.name === name);
+const orderList = document.getElementById("orderList");
+const emptyMessage = document.getElementById("emptyMessage");
+const totalAmount = document.getElementById("totalAmount");
+const toast = document.getElementById("toast");
 
-    if (existing) {
-        existing.quantity++;
-    } else {
-        orders.push({
-            name: name,
-            price: price,
-            quantity: 1
-        });
-    }
+document.querySelectorAll(".add-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        const name = button.dataset.name;
+        const price = Number(button.dataset.price);
 
-    renderOrder();
-}
+        const existing = orders.find(item => item.name === name);
 
-function changeQuantity(name, change) {
-    const item = orders.find(item => item.name === name);
+        if (existing) {
+            existing.quantity++;
+        } else {
+            orders.push({ name, price, quantity: 1 });
+        }
 
-    if (!item) return;
-
-    item.quantity += change;
-
-    if (item.quantity <= 0) {
-        orders = orders.filter(item => item.name !== name);
-    }
-
-    renderOrder();
-}
-
-function removeItem(name) {
-    orders = orders.filter(item => item.name !== name);
-    renderOrder();
-}
+        renderOrder();
+        showToast(`${name} added to order`);
+    });
+});
 
 function renderOrder() {
-    const body = document.getElementById("orderBody");
-    const table = document.getElementById("orderTable");
-    const empty = document.getElementById("emptyOrder");
-    const totalElement = document.getElementById("totalAmount");
-    const countElement = document.getElementById("cartCount");
+    orderList.innerHTML = "";
 
-    body.innerHTML = "";
+    if (orders.length === 0) {
+        emptyMessage.style.display = "block";
+        totalAmount.textContent = "₹0";
+        return;
+    }
+
+    emptyMessage.style.display = "none";
 
     let total = 0;
-    let itemCount = 0;
 
-    orders.forEach(item => {
+    orders.forEach((item, index) => {
         const amount = item.price * item.quantity;
         total += amount;
-        itemCount += item.quantity;
 
-        const row = document.createElement("tr");
+        const div = document.createElement("div");
+        div.className = "order-item";
 
-        row.innerHTML = `
-            <td><strong>${item.name}</strong></td>
-            <td>
-                <div class="qty-controls">
-                    <button onclick="changeQuantity('${item.name}', -1)">−</button>
-                    <strong>${item.quantity}</strong>
-                    <button onclick="changeQuantity('${item.name}', 1)">+</button>
+        div.innerHTML = `
+            <div class="item-top">
+                <span>${capitalize(item.name)}</span>
+                <span>₹${amount}</span>
+            </div>
+
+            <div class="item-bottom">
+                <div class="qty-box">
+                    <button onclick="changeQty(${index}, -1)">−</button>
+                    <span>Qty: ${item.quantity}</span>
+                    <button onclick="changeQty(${index}, 1)">+</button>
                 </div>
-            </td>
-            <td>₹${item.price}</td>
-            <td><strong>₹${amount}</strong></td>
-            <td>
-                <button class="remove-btn" onclick="removeItem('${item.name}')" title="Remove">🗑️</button>
-            </td>
+
+                <button class="delete-btn" onclick="deleteItem(${index})" title="Delete">
+                    🗑️
+                </button>
+            </div>
         `;
 
-        body.appendChild(row);
+        orderList.appendChild(div);
     });
 
-    totalElement.textContent = `₹${total}`;
-    countElement.textContent = `${itemCount} ${itemCount === 1 ? "ITEM" : "ITEMS"}`;
-
-    if (orders.length === 0) {
-        table.style.display = "none";
-        empty.style.display = "block";
-    } else {
-        table.style.display = "table";
-        empty.style.display = "none";
-    }
+    totalAmount.textContent = `₹${total}`;
 }
 
-async function placeOrder() {
+function changeQty(index, change) {
+    orders[index].quantity += change;
+
+    if (orders[index].quantity <= 0) {
+        orders.splice(index, 1);
+    }
+
+    renderOrder();
+}
+
+function deleteItem(index) {
+    const item = orders[index];
+    orders.splice(index, 1);
+    renderOrder();
+    showToast(`${item.name} removed`);
+}
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+    orders = [];
+    renderOrder();
+    showToast("Order cleared");
+});
+
+document.getElementById("billBtn").addEventListener("click", async () => {
     if (orders.length === 0) {
-        alert("Please add at least one item to your order.");
+        showToast("Please add an item first");
         return;
     }
 
     try {
-        const response = await fetch("/order", {
+        const response = await fetch("/calculate", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -102,16 +108,33 @@ async function placeOrder() {
 
         const data = await response.json();
 
-        alert(`ORDER PLACED SUCCESSFULLY!\n\nTotal Amount: ₹${data.total}`);
-        clearOrder();
+        let bill = "KTM RESTAURANT\\n";
+        bill += "------------------------------\\n";
+
+        data.items.forEach(item => {
+            bill += `${item.name} x ${item.quantity} = ₹${item.amount}\\n`;
+        });
+
+        bill += "------------------------------\\n";
+        bill += `TOTAL AMOUNT = ₹${data.total}`;
+
+        alert(bill);
     } catch (error) {
-        alert("Something went wrong. Please try again.");
+        showToast("Unable to generate bill");
     }
+});
+
+function capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-function clearOrder() {
-    orders = [];
-    renderOrder();
+function showToast(message) {
+    toast.textContent = message;
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 1500);
 }
 
 renderOrder();
