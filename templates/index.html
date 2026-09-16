@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KTM RESTAURANT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="hero">
+    <div class="hero-content">
+        <p class="small-title">WELCOME TO</p>
+        <h1>KTM RESTAURANT</h1>
+        <p class="tagline">GOOD FOOD • GOOD MOOD • GREAT MOMENTS</p>
+    </div>
+</header>
+
+<main class="container">
+    <section class="menu-section">
+        <div class="section-heading">
+            <span>OUR MENU</span>
+            <h2>Choose Your Favourite</h2>
+        </div>
+
+        <div class="menu-grid">
+            {% for name, price in menu.items() %}
+            <div class="menu-card">
+                <div class="food-icon">
+                    {% if name == "Pizza" %}🍕
+                    {% elif name == "Burger" %}🍔
+                    {% elif name == "Pasta" %}🍝
+                    {% elif name == "Sandwich" %}🥪
+                    {% elif name == "Fries" %}🍟
+                    {% elif name == "Coke" %}🥤
+                    {% elif name == "Coffee" %}☕
+                    {% else %}🍵{% endif %}
+                </div>
+                <h3>{{ name }}</h3>
+                <p class="price">₹{{ price }}</p>
+                <button class="add-btn" onclick="addItem('{{ name }}', {{ price }})">
+                    ADD TO ORDER
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="order-section">
+        <div class="order-header">
+            <div>
+                <span>YOUR ORDER</span>
+                <h2>ORDER SUMMARY</h2>
+            </div>
+            <div class="cart-count" id="cartCount">0 ITEMS</div>
+        </div>
+
+        <div id="emptyOrder" class="empty-order">
+            <div>🛒</div>
+            <p>Your order is empty</p>
+            <small>Add some delicious items from the menu.</small>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="orderTable">
+                <thead>
+                    <tr>
+                        <th>ITEM</th>
+                        <th>QTY</th>
+                        <th>PRICE</th>
+                        <th>AMOUNT</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="orderBody"></tbody>
+            </table>
+        </div>
+
+        <div class="total-box">
+            <span>TOTAL AMOUNT</span>
+            <strong id="totalAmount">₹0</strong>
+        </div>
+
+        <button class="place-order" onclick="placeOrder()">PLACE ORDER</button>
+        <button class="clear-order" onclick="clearOrder()">CLEAR ORDER</button>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 KTM RESTAURANT • THANK YOU FOR VISITING</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
