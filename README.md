@@ -1,17 +1,60 @@
-🍽️ Apna  Restaurant
-Restaurant Menu & Billing System
+# Apna Restaurant & Billing Menu
 
-Clear Order
-Our Menu
-{% for name, price in menu.items() %}
-{% if name == 'pizza' %}🍕 {% elif name == 'burger' %}🍔 {% elif name == 'pasta' %}🍝 {% elif name == 'sandwich' %}🥪 {% elif name == 'fries' %}🍟 {% elif name == 'coke' %}🥤 {% elif name == 'coffee' %}☕ {% else %}🍵 {% endif %}
-{{ name.title() }}
-₹{{ price }}
+A simple restaurant menu and billing system built with Python Flask, HTML, CSS and JavaScript.
 
-Add to Order
-{% endfor %}
-🧾 Your Order
-No items added yet.
-Select an item from the menu.
-Total Amount ₹0
-Generate Bill
+## Features
+
+- Restaurant menu
+- Add items
+- Quantity +/-
+- Delete items
+- Item-wise amount
+- Total amount
+- Generate bill
+- Responsive design
+- Flask backend
+
+## Run locally
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run:
+
+```bash
+python app.py
+```
+
+Open:
+
+```text
+http://127.0.0.1:5000
+```
+
+## Deploy on Render
+
+1. Push this project to GitHub.
+2. Create a Web Service on Render.
+3. Connect your GitHub repository.
+4. Build Command:
+
+```bash
+pip install -r requirements.txt
+```
+
+5. Start Command:
+
+```bash
+gunicorn app:app
+```
+
+6. Deploy.
+
+### Important
+
+Do NOT use GitHub Pages for this Flask project. GitHub Pages cannot run Python/Flask backend code.
+
+Use GitHub for the source code and Render (or another Python hosting service) to run the Flask application.
