@@ -1,17 +1,20 @@
-🍽️ Apna  Restaurant
-Restaurant Menu & Billing System
+🍽️ KTM RESTAURANT
+GOOD FOOD • GOOD MOOD • GREAT MOMENTS
 
 Clear Order
-Our Menu
-{% for name, price in menu.items() %}
-{% if name == 'pizza' %}🍕 {% elif name == 'burger' %}🍔 {% elif name == 'pasta' %}🍝 {% elif name == 'sandwich' %}🥪 {% elif name == 'fries' %}🍟 {% elif name == 'coke' %}🥤 {% elif name == 'coffee' %}☕ {% else %}🍵 {% endif %}
-{{ name.title() }}
-₹{{ price }}
-
-Add to Order
+OUR MENU
+Choose Your Favourite
+{% set icons={'pasta':'🍝','pizza':'🍕','burger':'🍔','sandwich':'🥪','fries':'🍟','coke':'🥤','coffee':'☕','tea':'🍵'} %} {% for name,price in menu.items() %}
+{{ icons[name] }}
+{{name.title()}}
+₹{{price}} ADD TO ORDER
 {% endfor %}
-🧾 Your Order
-No items added yet.
-Select an item from the menu.
-Total Amount ₹0
-Generate Bill
+YOUR ORDER
+0 ITEMS
+
+🛒
+Your order is empty.
+Add items from the menu.
+Subtotal₹0
+TOTAL AMOUNT₹0
+GENERATE BILL
