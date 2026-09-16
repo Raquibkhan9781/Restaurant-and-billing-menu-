@@ -1,16 +1,17 @@
-# Restaurant-and-billing-menu
+🍽️ Apna  Restaurant
+Restaurant Menu & Billing System
 
-RUN:
-1. Open terminal in this folder.
-2. Run: pip install -r requirements.txt
-3. Run: python app.py
-4. Open the shown local address in your browser (usually http://127.0.0.1:5000).
+Clear Order
+Our Menu
+{% for name, price in menu.items() %}
+{% if name == 'pizza' %}🍕 {% elif name == 'burger' %}🍔 {% elif name == 'pasta' %}🍝 {% elif name == 'sandwich' %}🥪 {% elif name == 'fries' %}🍟 {% elif name == 'coke' %}🥤 {% elif name == 'coffee' %}☕ {% else %}🍵 {% endif %}
+{{ name.title() }}
+₹{{ price }}
 
-Features:
-- Restaurant menu
-- Add items
-- Quantity +/-
-- Delete items
-- Item-wise amount
-- Total amount
-- Flask backend
+Add to Order
+{% endfor %}
+🧾 Your Order
+No items added yet.
+Select an item from the menu.
+Total Amount ₹0
+Generate Bill
